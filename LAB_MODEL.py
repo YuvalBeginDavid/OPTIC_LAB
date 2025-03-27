@@ -1,23 +1,43 @@
 import streamlit as st
 from PIL import Image
 
-# טעינת תמונות
-img_off = Image.open("lab_off.png")
-img_on = Image.open("lab_on.png")
+# Loading images
+img_AAA = Image.open("AAA.png")
+img_AAB = Image.open("AAB.png")
+img_ABA = Image.open("ABA.png")
+img_ABB = Image.open("ABB.png")
+img_BAA = Image.open("BAA.png")
+img_BAB = Image.open("BAB.png")
+img_BBA = Image.open("BBA.png")
+img_BBB = Image.open("BBB.png")
 
-# כותרת
-st.title('מעבדת חשמל - מתג אור')
+# Title
+st.title('Electric Lab - Control Panel')
 
-# כפתור להדלקה וכיבוי אור
-if st.button('הדלק/כבה אור'):
-    # בודקים את המצב הנוכחי של הכפתור ומעדכנים את מצב התמונה
-    if 'light_on' not in st.session_state:
-        st.session_state.light_on = False  # מצב התחלתי
+# Switches
+filter_status = st.checkbox("FILTER ON/OFF", False)
+gdd_status = st.checkbox("GDD ON/OFF", False)
+lab_light_status = st.checkbox("LAB LIGHT ON/OFF", False)
 
-    st.session_state.light_on = not st.session_state.light_on  # שינוי מצב
+# Determining the image based on the switches' status
+def get_image(filter, gdd, lab_light):
+    if not filter and not gdd and not lab_light:
+        return img_AAA
+    elif not filter and not gdd and lab_light:
+        return img_AAB
+    elif not filter and gdd and not lab_light:
+        return img_ABA
+    elif not filter and gdd and lab_light:
+        return img_ABB
+    elif filter and not gdd and not lab_light:
+        return img_BAA
+    elif filter and not gdd and lab_light:
+        return img_BAB
+    elif filter and gdd and not lab_light:
+        return img_BBA
+    elif filter and gdd and lab_light:
+        return img_BBB
 
-# תצוגת התמונה המתאימה
-if st.session_state.get('light_on', False):
-    st.image(img_on, caption="אור דולק")
-else:
-    st.image(img_off, caption="אור כבוי")
+# Displaying the image
+current_image = get_image(filter_status, gdd_status, lab_light_status)
+st.image(current_image, use_column_width=True)

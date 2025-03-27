@@ -11,7 +11,6 @@ img_BAB = Image.open("BAB.jpg")
 img_BBA = Image.open("BBA.jpg")
 img_BBB = Image.open("BBB.jpg")
 
-
 # Title
 st.title('Electric Lab - Control Panel')
 

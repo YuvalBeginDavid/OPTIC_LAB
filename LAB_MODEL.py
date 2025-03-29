@@ -57,7 +57,6 @@ with col2:
     gdd_status = st.checkbox("GDD ON/OFF", False)
 with col3:
     lab_light_status = st.checkbox("LAB LIGHT ON/OFF", True)  # Set to True for initial state AAB
-
 # Determining the image and graph based on the switches' status
 def get_image_and_graph(filter, gdd, lab_light):
     if not filter and not gdd and not lab_light:
@@ -81,7 +80,7 @@ def get_image_and_graph(filter, gdd, lab_light):
     elif filter and gdd and not lab_light:
         base_img = img_BBA
         graph_img = graph_BBA
-    elif filter and gdd and lab light:
+    elif filter and gdd and lab_light:
         base_img = img_BBB
         graph_img = graph_BBB
 

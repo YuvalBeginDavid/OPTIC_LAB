@@ -11,15 +11,22 @@ img_BAB = Image.open("BAB.png")
 img_BBA = Image.open("BBA.png")
 img_BBB = Image.open("BBB.png")
 
-# Loading graph images
-graph_AAA = Image.open("GAAA.png")
-graph_AAB = Image.open("GAAB.png")
-graph_ABA = Image.open("GABA.png")
-graph_ABB = Image.open("GABB.png")
-graph_BAA = Image.open("GBAA.png")
-graph_BAB = Image.open("GBAB.png")
-graph_BBA = Image.open("GBBA.png")
-graph_BBB = Image.open("GBBB.png")
+# Loading and cropping graph images
+def load_and_crop_graph(filename):
+    img = Image.open(filename)
+    width, height = img.size
+    # Cropping the bottom part of the graph
+    cropped_graph = img.crop((0, height//2, width, height))
+    return cropped_graph
+
+graph_AAA = load_and_crop_graph("GAAA.png")
+graph_AAB = load_and_crop_graph("GAAB.png")
+graph_ABA = load_and_crop_graph("GABA.png")
+graph_ABB = load_and_crop_graph("GABB.png")
+graph_BAA = load_and_crop_graph("GBAA.png")
+graph_BAB = load_and_crop_graph("GBAB.png")
+graph_BBA = load_and_crop_graph("GBBA.png")
+graph_BBB = load_and_crop_graph("GBBB.png")
 
 # Title and subtitle with smaller font size using markdown
 st.markdown("""
@@ -36,28 +43,41 @@ with col2:
 with col3:
     lab_light_status = st.checkbox("LAB LIGHT ON/OFF", False)
 
-# Determining the image and graph based on the switches' status
-def get_image_and_graph(filter, gdd, lab_light):
-     if not filter and gdd and lab_light:
-        return img_BBB, graph_BBB
-     elif filter and not gdd and not lab_light:
-        return img_AAA, graph_AAA
+# Determining the image and placing the graph at the bottom center part of the image
+def get_combined_image(filter, gdd, lab_light):
+    if not filter and not gdd and not lab_light:
+        base_img = img_AAA
+        graph_img = graph_AAA
     elif not filter and not gdd and lab_light:
-        return img_AAB, graph_AAB
+        base_img = img_AAB
+        graph_img = graph_AAB
     elif not filter and gdd and not lab_light:
-        return img_ABA, graph_ABA
+        base_img = img_ABA
+        graph_img = graph_ABA
     elif not filter and gdd and lab_light:
-        return img_ABB, graph_ABB
+        base_img = img_ABB
+        graph_img = graph_ABB
     elif filter and not gdd and not lab_light:
-        return img_BAA, graph_BAA
+        base_img = img_BAA
+        graph_img = graph_BAA
     elif filter and not gdd and lab_light:
-        return img_BAB, graph_BAB
+        base_img = img_BAB
+        graph_img = graph_BAB
     elif filter and gdd and not lab_light:
-        return img_BBA, graph_BBA
+        base_img = img_BBA
+        graph_img = graph_BBA
     elif filter and gdd and lab_light:
-        return img_BBB, graph_BBB
+        base_img = img_BBB
+        graph_img = graph_BBB
 
-# Displaying the image and graph
-current_image, current_graph = get_image_and_graph(filter_status, gdd_status, lab_light_status)
+    # Combine the images
+    base_width, base_height = base_img.size
+    graph_width, graph_height = graph_img.size
+    # Positioning the graph at the bottom center
+    position = ((base_width - graph_width) // 2, base_height - graph_height)
+    base_img.paste(graph_img, position, graph_img)
+    return base_img
+
+# Displaying the combined image
+current_image = get_combined_image(filter_status, gdd_status, lab_light_status)
 st.image(current_image, use_container_width=True)
-st.image(current_graph, use_container_width=True)

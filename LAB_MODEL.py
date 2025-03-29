@@ -27,14 +27,14 @@ st.markdown("""
 ### Yuval & Adi For Prof. Yosef Pinhasi
 """, unsafe_allow_html=True)
 
-# Creating a horizontal layout for switches
+# Creating a horizontal layout for switches and setting initial states
 col1, col2, col3 = st.columns(3)
 with col1:
     filter_status = st.checkbox("FILTER ON/OFF", False)
 with col2:
     gdd_status = st.checkbox("GDD ON/OFF", False)
 with col3:
-    lab_light_status = st.checkbox("LAB LIGHT ON/OFF", False)
+    lab_light_status = st.checkbox("LAB LIGHT ON/OFF", True)  # Set to True for initial state AAB
 
 # Determining the image and graph based on the switches' status
 def get_image_and_graph(filter, gdd, lab_light):

@@ -11,8 +11,9 @@ img_BAB = Image.open("BAB.png")
 img_BBA = Image.open("BBA.png")
 img_BBB = Image.open("BBB.png")
 
-# Title
-st.title('Electric Lab - Control Panel')
+# Title and subtitle
+st.title('MMW LAB EXPILLUSTRATION')
+st.write('Yuval & Adi For Prof. Yosef Pinhasi')
 
 # Creating a horizontal layout for switches
 col1, col2, col3 = st.columns(3)

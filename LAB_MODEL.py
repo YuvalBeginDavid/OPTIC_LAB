@@ -26,7 +26,40 @@ st.markdown("""
 # MMW LAB EXPERIMENT ILLUSTRATION
 ### Yuval & Adi For Prof. Yosef Pinhasi
 """, unsafe_allow_html=True)
+rom PIL import Image, ImageDraw, ImageFont
 
+# Assuming you have an image called 'lab_setup.png' that you want to edit
+img = Image.open("lab_setup.png")
+draw = ImageDraw.Draw(img)
+
+# Font settings (you might need to adjust the path to a .ttf font file on your system)
+font = ImageFont.truetype("arial.ttf", 20)  # Change the font size and style as needed
+
+# Text to be added
+texts = [
+    "Radiation Source",
+    "Hyperbolic Mirror",
+    "Lens",
+    "GDD Holder",
+    "Photoreceiver"
+]
+
+# Positions for each text, you will need to adjust these based on your image
+positions = [
+    (50, 280),  # Position for the Radiation Source
+    (150, 280),  # Position for the Hyperbolic Mirror
+    (250, 280),  # Position for the Lens
+    (350, 280),  # Position for the GDD Holder
+    (450, 280)   # Position for the Photoreceiver
+]
+
+# Adding text to the image
+for text, pos in zip(texts, positions):
+    draw.text(pos, text, font=font, fill="white")
+
+# Save the modified image
+img.save("annotated_lab_setup.png")
+img.show()
 # Creating a horizontal layout for switches and setting initial states
 col1, col2, col3 = st.columns(3)
 with col1:

@@ -1,5 +1,5 @@
 import streamlit as st
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 # Loading images
 img_AAA = Image.open("AAA.png")
@@ -21,45 +21,18 @@ graph_BAB = Image.open("GBAB.png")
 graph_BBA = Image.open("GBBA.png")
 graph_BBB = Image.open("GBBB.png")
 
+# Font settings
+try:
+    font = ImageFont.truetype("arial.ttf", 20)
+except IOError:
+    font = ImageFont.load_default()
+
 # Title and subtitle with smaller font size using markdown
 st.markdown("""
 # MMW LAB EXPERIMENT ILLUSTRATION
 ### Yuval & Adi For Prof. Yosef Pinhasi
 """, unsafe_allow_html=True)
-rom PIL import Image, ImageDraw, ImageFont
 
-# Assuming you have an image called 'lab_setup.png' that you want to edit
-img = Image.open("lab_setup.png")
-draw = ImageDraw.Draw(img)
-
-# Font settings (you might need to adjust the path to a .ttf font file on your system)
-font = ImageFont.truetype("arial.ttf", 20)  # Change the font size and style as needed
-
-# Text to be added
-texts = [
-    "Radiation Source",
-    "Hyperbolic Mirror",
-    "Lens",
-    "GDD Holder",
-    "Photoreceiver"
-]
-
-# Positions for each text, you will need to adjust these based on your image
-positions = [
-    (50, 280),  # Position for the Radiation Source
-    (150, 280),  # Position for the Hyperbolic Mirror
-    (250, 280),  # Position for the Lens
-    (350, 280),  # Position for the GDD Holder
-    (450, 280)   # Position for the Photoreceiver
-]
-
-# Adding text to the image
-for text, pos in zip(texts, positions):
-    draw.text(pos, text, font=font, fill="white")
-
-# Save the modified image
-img.save("annotated_lab_setup.png")
-img.show()
 # Creating a horizontal layout for switches and setting initial states
 col1, col2, col3 = st.columns(3)
 with col1:
@@ -72,21 +45,39 @@ with col3:
 # Determining the image and graph based on the switches' status
 def get_image_and_graph(filter, gdd, lab_light):
     if not filter and not gdd and not lab_light:
-        return img_AAA, graph_AAA
+        base_img = img_AAA
+        graph_img = graph_AAA
     elif not filter and not gdd and lab_light:
-        return img_AAB, graph_AAB
+        base_img = img_AAB
+        graph_img = graph_AAB
     elif not filter and gdd and not lab_light:
-        return img_ABA, graph_ABA
+        base_img = img_ABA
+        graph_img = graph_ABA
     elif not filter and gdd and lab_light:
-        return img_ABB, graph_ABB
+        base_img = img_ABB
+        graph_img = graph_ABB
     elif filter and not gdd and not lab_light:
-        return img_BAA, graph_BAA
+        base_img = img_BAA
+        graph_img = graph_BAA
     elif filter and not gdd and lab_light:
-        return img_BAB, graph_BAB
+        base_img = img_BAB
+        graph_img = graph_BAB
     elif filter and gdd and not lab_light:
-        return img_BBA, graph_BBA
+        base_img = img_BBA
+        graph_img = graph_BBA
     elif filter and gdd and lab_light:
-        return img_BBB, graph_BBB
+        base_img = img_BBB
+        graph_img = graph_BBB
+
+    # Draw text on the image
+    draw = ImageDraw.Draw(base_img)
+    texts = ["Radiation Source", "Hyperbolic Mirror", "Lens", "GDD Holder", "Photoreceiver"]
+    x_positions = [20, 120, 220, 320, 420]  # Example positions, adjust as necessary
+    y_position = base_img.height - 30  # Adjust vertical position as necessary
+    for text, x in zip(texts, x_positions):
+        draw.text((x, y_position), text, font=font, fill="white")
+
+    return base_img, graph_img
 
 # Displaying the image and graph
 current_image, current_graph = get_image_and_graph(filter_status, gdd_status, lab_light_status)

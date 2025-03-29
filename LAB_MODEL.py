@@ -14,10 +14,14 @@ img_BBB = Image.open("BBB.png")
 # Title
 st.title('Electric Lab - Control Panel')
 
-# Switches
-filter_status = st.checkbox("FILTER ON/OFF", False)
-gdd_status = st.checkbox("GDD ON/OFF", False)
-lab_light_status = st.checkbox("LAB LIGHT ON/OFF", False)
+# Creating a horizontal layout for switches
+col1, col2, col3 = st.columns(3)
+with col1:
+    filter_status = st.checkbox("FILTER ON/OFF", False)
+with col2:
+    gdd_status = st.checkbox("GDD ON/OFF", False)
+with col3:
+    lab_light_status = st.checkbox("LAB LIGHT ON/OFF", False)
 
 # Determining the image based on the switches' status
 def get_image(filter, gdd, lab_light):

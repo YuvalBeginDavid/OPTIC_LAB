@@ -73,7 +73,7 @@ def get_image_and_graph(filter, gdd, lab_light):
     draw = ImageDraw.Draw(base_img)
     texts = ["Photoreceiver", "GDD Holder", "Lens", "Hyperbolic Mirror", "Radiation Source"]
     x_positions = [120, 250, 380, 530, 700]  # Example positions, adjust as necessary
-    y_position = base_img.height - 220  # Adjust vertical position as necessary
+    y_position = base_img.height - 230  # Adjust vertical position as necessary
     for text, x in zip(texts, x_positions):
         draw.text((x, y_position), text, font=font, fill="white")
 

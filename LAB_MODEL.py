@@ -2,14 +2,14 @@ import streamlit as st
 from PIL import Image
 
 # Loading images
-img_AAA = Image.open("AAA.png")
-img_AAB = Image.open("AAB.png")
-img_ABA = Image.open("ABA.png")
-img_ABB = Image.open("ABB.png")
-img_BAA = Image.open("BAA.png")
-img_BAB = Image.open("BAB.png")
-img_BBA = Image.open("BBA.png")
-img_BBB = Image.open("BBB.png")
+img_AAA = Image.open("AAA.jpg")
+img_AAB = Image.open("AAB.jpg")
+img_ABA = Image.open("ABA.jpg")
+img_ABB = Image.open("ABB.jpg")
+img_BAA = Image.open("BAA.jpg")
+img_BAB = Image.open("BAB.jpg")
+img_BBA = Image.open("BBA.jpg")
+img_BBB = Image.open("BBB.jpg")
 
 # Title
 st.title('Electric Lab - Control Panel')
@@ -40,4 +40,4 @@ def get_image(filter, gdd, lab_light):
 
 # Displaying the image
 current_image = get_image(filter_status, gdd_status, lab_light_status)
-st.image(current_image, use_column_width=True)
+st.image(current_image, use_container_width=True)

@@ -11,22 +11,24 @@ img_BAB = Image.open("BAB.png")
 img_BBA = Image.open("BBA.png")
 img_BBB = Image.open("BBB.png")
 
-# Loading and cropping graph images
-def load_and_crop_graph(filename):
+# Loading and resizing graph images
+def load_and_resize_graph(filename):
     img = Image.open(filename)
     width, height = img.size
-    # Cropping the bottom part of the graph
-    cropped_graph = img.crop((0, height//2, width, height))
-    return cropped_graph
+    # Cropping the bottom part of the graph (small portion)
+    cropped_graph = img.crop((0, int(height*0.75), width, height))
+    # Resizing the cropped part to make it smaller
+    resized_graph = cropped_graph.resize((int(width*0.5), int(height*0.25)), Image.ANTIALIAS)
+    return resized_graph
 
-graph_AAA = load_and_crop_graph("GAAA.png")
-graph_AAB = load_and_crop_graph("GAAB.png")
-graph_ABA = load_and_crop_graph("GABA.png")
-graph_ABB = load_and_crop_graph("GABB.png")
-graph_BAA = load_and_crop_graph("GBAA.png")
-graph_BAB = load_and_crop_graph("GBAB.png")
-graph_BBA = load_and_crop_graph("GBBA.png")
-graph_BBB = load_and_crop_graph("GBBB.png")
+graph_AAA = load_and_resize_graph("GAAA.png")
+graph_AAB = load_and_resize_graph("GAAB.png")
+graph_ABA = load_and_resize_graph("GABA.png")
+graph_ABB = load_and_resize_graph("GABB.png")
+graph_BAA = load_and_resize_graph("GBAA.png")
+graph_BAB = load_and_resize_graph("GBAB.png")
+graph_BBA = load_and_resize_graph("GBBA.png")
+graph_BBB = load_and_resize_graph("GBBB.png")
 
 # Title and subtitle with smaller font size using markdown
 st.markdown("""
@@ -43,7 +45,7 @@ with col2:
 with col3:
     lab_light_status = st.checkbox("LAB LIGHT ON/OFF", False)
 
-# Determining the image and placing the graph at the bottom center part of the image
+# Determining the image and placing the resized graph at the bottom center part of the image
 def get_combined_image(filter, gdd, lab_light):
     if not filter and not gdd and not lab_light:
         base_img = img_AAA

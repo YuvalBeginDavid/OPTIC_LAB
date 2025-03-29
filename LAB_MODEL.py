@@ -1,41 +1,25 @@
 import streamlit as st
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFont
 
-def trim_edges(im, border=10):
-    """ Trims a border around the image """
-    bg = Image.new(im.mode, im.size, im.getpixel((0,0)))
-    diff = ImageChops.difference(im, bg)
-    diff = ImageChops.add(diff, diff, 2.0, -100)
-    bbox = diff.getbbox()
-    if bbox:
-        return im.crop([bbox[0] + border, bbox[1] + border, bbox[2] - border, bbox[3] - border])
-    return im
+# Loading images
+img_AAA = Image.open("AAA.png")
+img_AAB = Image.open("AAB.png")
+img_ABA = Image.open("ABA.png")
+img_ABB = Image.open("ABB.png")
+img_BAA = Image.open("BAA.png")
+img_BAB = Image.open("BAB.png")
+img_BBA = Image.open("BBA.png")
+img_BBB = Image.open("BBB.png")
 
-# Loading and processing images
-def load_and_process_image(file_path):
-    img = Image.open(file_path)
-    img = trim_edges(img)
-    return img
-
-# Load all images with borders trimmed
-img_AAA = load_and_process_image("AAA.png")
-img_AAB = load_and_process_image("AAB.png")
-img_ABA = load_and_process_image("ABA.png")
-img_ABB = load_and_process_image("ABB.png")
-img_BAA = load_and_process_image("BAA.png")
-img_BAB = load_and_process_image("BAB.png")
-img_BBA = load_and_process_image("BBA.png")
-img_BBB = load_and_process_image("BBB.png")
-
-# Load all graph images similarly if necessary
-graph_AAA = load_and_process_image("GAAA.png")
-graph_AAB = load_and_process_image("GAAB.png")
-graph_ABA = load_and_process_image("GABA.png")
-graph_ABB = load_and_process_image("GABB.png")
-graph_BAA = load_and_process_image("GBAA.png")
-graph_BAB = load_and_process_image("GBAB.png")
-graph_BBA = load_and_process_image("GBBA.png")
-graph_BBB = load_and_process_image("GBBB.png")
+# Loading graph images
+graph_AAA = Image.open("GAAA.png")
+graph_AAB = Image.open("GAAB.png")
+graph_ABA = Image.open("GABA.png")
+graph_ABB = Image.open("GABB.png")
+graph_BAA = Image.open("GBAA.png")
+graph_BAB = Image.open("GBAB.png")
+graph_BBA = Image.open("GBBA.png")
+graph_BBB = Image.open("GBBB.png")
 
 # Font settings
 try:
@@ -57,6 +41,7 @@ with col2:
     gdd_status = st.checkbox("GDD ON/OFF", False)
 with col3:
     lab_light_status = st.checkbox("LAB LIGHT ON/OFF", True)  # Set to True for initial state AAB
+
 # Determining the image and graph based on the switches' status
 def get_image_and_graph(filter, gdd, lab_light):
     if not filter and not gdd and not lab_light:

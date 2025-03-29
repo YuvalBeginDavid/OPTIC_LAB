@@ -12,7 +12,7 @@ img_BBA = Image.open("BBA.png")
 img_BBB = Image.open("BBB.png")
 
 # Title and subtitle
-st.title('MMW LAB EXPILLUSTRATION')
+st.title('MMW LAB EXPERIMENT ILLUSTRATION')
 st.write('Yuval & Adi For Prof. Yosef Pinhasi')
 
 # Creating a horizontal layout for switches

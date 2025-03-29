@@ -70,7 +70,7 @@ def get_image_and_graph(filter, gdd, lab_light):
         graph_img = graph_BBB
 
     # Resize the graph to a small icon and place it at the top-left corner
-    small_graph = graph_img.resize((80, 40))
+    small_graph = graph_img.resize((200, 120))
     base_img.paste(small_graph, (10, 10), small_graph)
 
     # Draw text on the image

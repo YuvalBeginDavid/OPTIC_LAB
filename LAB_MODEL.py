@@ -38,7 +38,9 @@ with col3:
 
 # Determining the image and graph based on the switches' status
 def get_image_and_graph(filter, gdd, lab_light):
-    if not filter and not gdd and not lab_light:
+     if not filter and gdd and lab_light:
+        return img_BBB, graph_BBB
+     elif filter and not gdd and not lab_light:
         return img_AAA, graph_AAA
     elif not filter and not gdd and lab_light:
         return img_AAB, graph_AAB

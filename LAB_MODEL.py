@@ -83,3 +83,4 @@ def get_image_and_graph(filter, gdd, lab_light):
 current_image, current_graph = get_image_and_graph(filter_status, gdd_status, lab_light_status)
 st.image(current_image, use_container_width=True)
 st.image(current_graph, use_container_width=True)
+
